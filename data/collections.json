@@ -1,0 +1,107 @@
+{
+    "coal": {
+      "collectionName": "Coal",
+      "collectionEnchanted": "Enchanted Coal"
+    },
+    "cobblestone": {
+      "collectionName": "Cobblestone",
+      "collectionEnchanted": "Enchanted Cobblestone"
+    },
+    "diamond": {
+      "collectionName": "Diamond",
+      "collectionEnchanted": "Enchanted Diamond"
+    },
+    "emerald": {
+      "collectionName": "Emerald",
+      "collectionEnchanted": "Enchanted Emerald"
+    },
+    "endstone": {
+      "collectionName": "End Stone",
+      "collectionEnchanted": "Enchanted End Stone"
+    },
+    "glacite": {
+      "collectionName": "Glacite",
+      "collectionEnchanted": "Enchanted Glacite"
+    },
+    "glossy": {
+      "collectionName": "Glossy Gemstone",
+      "collectionEnchanted": "Glossy Gemstone"
+    },
+    "glowstone": {
+      "collectionName": "Glowstone Dust",
+      "collectionEnchanted": "Enchanted Glowstone Dust"
+    },
+    "gold": {
+      "collectionName": "Gold Ingot",
+      "collectionEnchanted": "Enchanted Gold"
+    },
+    "hardstone": {
+      "collectionName": "Hard Stone",
+      "collectionEnchanted": "Enchanted Hard Stone"
+    },
+    "ice": {
+      "collectionName": "Ice",
+      "collectionEnchanted": "Enchanted Ice"
+    },
+    "iron": {
+      "collectionName": "Iron Ingot",
+      "collectionEnchanted": "Enchanted Iron"
+    },
+    "lapis": {
+      "collectionName": "Lapis Lazuli",
+      "collectionEnchanted": "Enchanted Lapis Lazuli"
+    },
+    "mithril": {
+      "collectionName": "Mithril",
+      "collectionEnchanted": "Enchanted Mithril"
+    },
+    "mycelium": {
+      "collectionName": "Mycelium",
+      "collectionEnchanted": "Enchanted Mycelium"
+    },
+    "netherrack": {
+      "collectionName": "Netherrack",
+      "collectionEnchanted": "Enchanted Netherrack"
+    },
+    "quartz": {
+      "collectionName": "Nether Quartz",
+      "collectionEnchanted": "Enchanted Quartz"
+    },
+    "obsidian": {
+      "collectionName": "Obsidian",
+      "collectionEnchanted": "Enchanted Obsidian"
+    },
+    "redsand": {
+      "collectionName": "Red Sand",
+      "collectionEnchanted": "Enchanted Red Sand"
+    },
+    "redstone": {
+      "collectionName": "Redstone",
+      "collectionEnchanted": "Enchanted Redstone"
+    },
+    "refined": {
+      "collectionName": "Refined Mineral",
+      "collectionEnchanted": "Refined Mineral"
+    },
+    "sand": {
+      "collectionName": "Sand",
+      "collectionEnchanted": "Enchanted Sand"
+    },
+    "sludge": {
+      "collectionName": "Sludge Juice",
+      "collectionEnchanted": "Sludge Juice"
+    },
+    "titanium": {
+      "collectionName": "Titanium",
+      "collectionEnchanted": "Enchanted Titanium"
+    },
+    "tungsten": {
+      "collectionName": "Tungsten",
+      "collectionEnchanted": "Enchanted Tungsten"
+    },
+    "umber": {
+      "collectionName": "Umber",
+      "collectionEnchanted": "Enchanted Umber"
+    }
+  }
+  
