@@ -6,6 +6,7 @@ import { updateRegisters } from "./helperFunctions"
 
 let PogData = new PogObject("Coleweight", {
     "api_key": "",
+    "miningXP": 0,
     "professional": 0,
     "jungle_amulet": true,
     "first_time": true,
@@ -72,6 +73,7 @@ let PogData = new PogObject("Coleweight", {
         "scale": 1.0
     },
     "miningtestgui": {
+        "istestactive": false,
         "collectionName": '',
         "collectionGained": 0,
         "maxtimer": 0,
@@ -121,32 +123,34 @@ let PogData = new PogObject("Coleweight", {
 
 
 let PBs = new PogObject("Coleweight", {
+        "setnewpb": "",
+        "XP": 0,
         "Coal": 0,
         "Cobblestone": 0,
         "Diamond": 0,
         "Emerald": 0,
-        "EndStone": 0,
+        "End Stone": 0,
         "Glacite": 0,
-        "Glossy": 0,
-        "Glowstone": 0,
-        "Gold": 0,
-        "HardStone": 0,
+        "Glossy Gemstone": 0,
+        "Glowstone Dust": 0,
+        "Gold Ingot": 0,
+        "Hard Stone": 0,
         "Ice": 0,
-        "Iron": 0,
-        "Lapis": 0,
+        "Iron Ingot": 0,
+        "Lapis Lazuli": 0,
         "Mithril": 0,
         "Mycelium": 0,
         "Netherrack": 0,
-        "Quartz": 0,
+        "Nether Quartz": 0,
         "Obsidian": 0,
-        "RedSand": 0,
+        "Red Sand": 0,
         "Redstone": 0,
-        "Refined": 0,
+        "Refined Mineral": 0,
         "Sand": 0,
-        "Sludge": 0,
+        "Sludge Juice": 0,
         "Titanium": 0,
         "Tungsten": 0,
-        "Umber": 0
+        "Umber": 0,
 }, "config/pbs.json")
 
 

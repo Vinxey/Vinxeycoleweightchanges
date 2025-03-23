@@ -393,6 +393,13 @@ class Settings {
     })
     miningtestgui = false;
 
+    @TextProperty({
+        name: "Test Start Countdown",
+        description: "time in seconds before the test starts",
+        subcategory: "MiningTest",
+        category: "Gui"
+    })
+    testCountdown = "5";
 
     @ButtonProperty({
         name: "Change MiningTest gui position",

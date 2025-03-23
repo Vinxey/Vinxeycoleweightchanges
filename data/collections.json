@@ -1,107 +1,138 @@
 {
+    "xp":{
+      "collectionName": "XP",
+      "collectionEnchanted": "notreal",
+      "amountToCompact": "notreal"
+    },
     "coal": {
       "collectionName": "Coal",
-      "collectionEnchanted": "Enchanted Coal"
+      "collectionEnchanted": "Enchanted Coal",
+      "amountToCompact":  160
     },
     "cobblestone": {
       "collectionName": "Cobblestone",
-      "collectionEnchanted": "Enchanted Cobblestone"
+      "collectionEnchanted": "Enchanted Cobblestone",
+      "amountToCompact":  160
     },
     "diamond": {
       "collectionName": "Diamond",
-      "collectionEnchanted": "Enchanted Diamond"
+      "collectionEnchanted": "Enchanted Diamond",
+      "amountToCompact":  160
     },
     "emerald": {
       "collectionName": "Emerald",
-      "collectionEnchanted": "Enchanted Emerald"
+      "collectionEnchanted": "Enchanted Emerald",
+      "amountToCompact":  160
     },
     "endstone": {
       "collectionName": "End Stone",
-      "collectionEnchanted": "Enchanted End Stone"
+      "collectionEnchanted": "Enchanted End Stone",
+      "amountToCompact":  160
     },
     "glacite": {
       "collectionName": "Glacite",
-      "collectionEnchanted": "Enchanted Glacite"
+      "collectionEnchanted": "Enchanted Glacite",
+      "amountToCompact":  160
     },
     "glossy": {
       "collectionName": "Glossy Gemstone",
-      "collectionEnchanted": "Glossy Gemstone"
+      "collectionEnchanted": "notreal",
+      "amountToCompact":  160
     },
     "glowstone": {
       "collectionName": "Glowstone Dust",
-      "collectionEnchanted": "Enchanted Glowstone Dust"
+      "collectionEnchanted": "Enchanted Glowstone Dust",
+      "amountToCompact":  160
     },
     "gold": {
       "collectionName": "Gold Ingot",
-      "collectionEnchanted": "Enchanted Gold"
+      "collectionEnchanted": "Enchanted Gold",
+      "amountToCompact":  160
     },
     "hardstone": {
       "collectionName": "Hard Stone",
-      "collectionEnchanted": "Enchanted Hard Stone"
+      "collectionEnchanted": "Enchanted Hard Stone",
+      "amountToCompact":  576
     },
     "ice": {
       "collectionName": "Ice",
-      "collectionEnchanted": "Enchanted Ice"
+      "collectionEnchanted": "Enchanted Ice",
+      "amountToCompact":  160
     },
     "iron": {
       "collectionName": "Iron Ingot",
-      "collectionEnchanted": "Enchanted Iron"
+      "collectionEnchanted": "Enchanted Iron",
+      "amountToCompact":  160
     },
     "lapis": {
       "collectionName": "Lapis Lazuli",
-      "collectionEnchanted": "Enchanted Lapis Lazuli"
+      "collectionEnchanted": "Enchanted Lapis Lazuli",
+      "amountToCompact":  160
     },
     "mithril": {
       "collectionName": "Mithril",
-      "collectionEnchanted": "Enchanted Mithril"
+      "collectionEnchanted": "Enchanted Mithril",
+      "amountToCompact":  160
     },
     "mycelium": {
       "collectionName": "Mycelium",
-      "collectionEnchanted": "Enchanted Mycelium"
+      "collectionEnchanted": "Enchanted Mycelium",
+      "amountToCompact":  160
     },
     "netherrack": {
       "collectionName": "Netherrack",
-      "collectionEnchanted": "Enchanted Netherrack"
+      "collectionEnchanted": "Enchanted Netherrack",
+      "amountToCompact":  160
     },
     "quartz": {
       "collectionName": "Nether Quartz",
-      "collectionEnchanted": "Enchanted Quartz"
+      "collectionEnchanted": "Enchanted Quartz",
+      "amountToCompact":  160
     },
     "obsidian": {
       "collectionName": "Obsidian",
-      "collectionEnchanted": "Enchanted Obsidian"
+      "collectionEnchanted": "Enchanted Obsidian",
+      "amountToCompact":  160
     },
     "redsand": {
       "collectionName": "Red Sand",
-      "collectionEnchanted": "Enchanted Red Sand"
+      "collectionEnchanted": "Enchanted Red Sand",
+      "amountToCompact":  160
     },
     "redstone": {
       "collectionName": "Redstone",
-      "collectionEnchanted": "Enchanted Redstone"
+      "collectionEnchanted": "Enchanted Redstone",
+      "amountToCompact":  160
     },
     "refined": {
       "collectionName": "Refined Mineral",
-      "collectionEnchanted": "Refined Mineral"
+      "collectionEnchanted": "notreal",
+      "amountToCompact":  160
     },
     "sand": {
       "collectionName": "Sand",
-      "collectionEnchanted": "Enchanted Sand"
+      "collectionEnchanted": "Enchanted Sand",
+      "amountToCompact":  160
     },
     "sludge": {
       "collectionName": "Sludge Juice",
-      "collectionEnchanted": "Sludge Juice"
+      "collectionEnchanted": "notreal",
+      "amountToCompact":  160
     },
     "titanium": {
       "collectionName": "Titanium",
-      "collectionEnchanted": "Enchanted Titanium"
+      "collectionEnchanted": "Enchanted Titanium",
+      "amountToCompact":  160
     },
     "tungsten": {
       "collectionName": "Tungsten",
-      "collectionEnchanted": "Enchanted Tungsten"
+      "collectionEnchanted": "Enchanted Tungsten",
+      "amountToCompact":  160
     },
     "umber": {
       "collectionName": "Umber",
-      "collectionEnchanted": "Enchanted Umber"
+      "collectionEnchanted": "Enchanted Umber",
+      "amountToCompact":  160
     }
   }
   

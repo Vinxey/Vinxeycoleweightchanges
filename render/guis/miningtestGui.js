@@ -9,6 +9,15 @@ timer = 0;
 skymallDuringTest = [];
 lastcheck = false
 testover = true
+waitforresponse = false
+countdown = parseInt(settings.testCountdown)
+print(countdown)
+//delete after deving
+constants.data.miningtestgui.istestactive = false
+constants.data.save()
+constants.pbs.save()
+
+
 const miningtestgui = new BaseGui(["miningtestgui"], () =>
 {
 
@@ -18,57 +27,118 @@ const miningtestgui = new BaseGui(["miningtestgui"], () =>
             timer = `&aTimer: &b${timerHr}h ${Math.floor(constants.data.miningtestgui.timer/60) - timerHr*60}m`
     else
             timer = `&aTimer: &b${Math.floor(constants.data.miningtestgui.timer/60)}m ${Math.floor(constants.data.miningtestgui.timer%60)}s`
-    message = `&a${constants.data.miningtestgui.collectionName}/h: &b${collectionPerHour} \n&a${constants.data.miningtestgui.collectionName} Gained: &b${collectionTotal} \n${timer}`
+    message = `&a${constants.data.miningtestgui.collectionName}/h: &b${numberWithCommas(collectionPerHour)} \n&a${constants.data.miningtestgui.collectionName} Gained: &b${numberWithCommas(collectionTotal)} \n${timer}`
 
     return message
 }, () => {return miningtestgui.isOpen() || settings.miningtestgui})
 registerGui(miningtestgui)
 const title = new Title({text: "&bTest Over"})
+countdownTitle = new Title({text: ``, time:500})
+
+register("actionbar", (xp) => {
+    const match = xp.match(/\(([^)]+)\)/);
+    
+    if (match && xp.includes("Mining")) {
+        totalxp = match[1].replace(/,|\/0/g,"")
+        constants.data.miningXP  = totalxp
+    }
+}).setCriteria("${xp}")
 
 register("step", () => {
     
-    if(constants.data.miningtestgui.timer > 0)
-    {
-        testover = false
+
+    if (countdown >= 0 && constants.data.miningtestgui.timer > 0){
+        //print('meow')
+        if (countdown >0){
+            countdownTitle.text = `&b${countdown}`  
+        } else{
+            countdownTitle.text = `&bGO!`
+        }
+        countdown--
+        countdownTitle.draw()
+        if(constants.data.miningtestgui.collectionName == "XP"){
+            startingxp = constants.data.miningXP
+        }
+    }
+    //timer decrement and manage skymall array
+    else if(constants.data.miningtestgui.timer > 0){
         constants.data.miningtestgui.timer -= 1
         if (!skymallDuringTest.includes(constants.data.currentSkymall) ){skymallDuringTest.push(constants.data.currentSkymall)}
+        if (constants.data.miningtestgui.collectionName == "XP"){
+            collectionTotal = constants.data.miningXP - startingxp
+            collectionPerHour = Math.floor(collectionTotal * (3600 / (constants.data.miningtestgui.maxtimer - constants.data.miningtestgui.timer)))
+        }
     }
+    //when the test ends show title\
     else if (constants.data.testTitlePlay)
     {
         title.draw()
         constants.data.testTitlePlay = false
         constants.data.save()
-        lastcheck = true
+        //bool to allow for one last sack message
+        if(constants.data.miningtestgui.collectionName != "XP") lastcheck = true
     } 
-    else if (!lastcheck && constants.data.miningtestgui.timer <= 0 && !testover){
+    //if last sack message has been processed && there is a test going on currently && not waiting for pb response (this is so it dosent spam chat)
+    else if (!lastcheck && constants.data.miningtestgui.timer <= 0 && constants.data.miningtestgui.istestactive && !waitforresponse){
+        //set pb checker to current collection
         activepb = constants.pbs[constants.data.miningtestgui.collectionName]
+        //if you get a new pb
         if (collectionPerHour > activepb){
             newpb=true 
-            constants.pbs[constants.data.miningtestgui.collectionName] = collectionPerHour
-            constants.pbs.save()
+            //time for pb message
+            time =  `&b${Math.floor(constants.data.miningtestgui.maxtimer/60)}m ${Math.floor(constants.data.miningtestgui.maxtimer%60)}s`
+            finalMessage(collectionPerHour,time,newpb,constants.data.miningtestgui.collectionName,skymallDuringTest)
+            //confirm that they want to update their pb to the new one with a click message thing
+            ChatLib.chat(`${constants.PREFIX}&bWould you like to save your new pb?!`)
+            const confirmPB = new Message(
+                new TextComponent("&a[Yes]  ").setClick("run_command", "/cw setnewpb yes"),
+                new TextComponent("    &4[No]").setClick("run_command", "/cw setnewpb no")
+             );
+             ChatLib.chat(confirmPB);
+            //start waiting for a response from the player
+            waitforresponse = true
         }
-        else
-        {
-        newpb=false
+        else{
+            newpb=false
+            finalMessage(collectionPerHour,time,newpb,constants.data.miningtestgui.collectionName,skymallDuringTest)
+            resetTest()
         }
-        finalMessage(collectionPerHour,constants.data.miningtestgui.maxtimer,newpb,constants.data.miningtestgui.collectionName,skymallDuringTest)
-        resetTest()
         
+
+        //if waiting for a pb respoonse && there is a active test
+    } if (waitforresponse && constants.data.miningtestgui.istestactive){
+            if (constants.pbs.setnewpb == "yes"){
+                //update pb to new pb
+                constants.pbs[constants.data.miningtestgui.collectionName] = collectionPerHour
+                resetTest()
+                ChatLib.chat(`${constants.PREFIX}&bPb was saved!`)
+            } else if (constants.pbs.setnewpb == "no") {
+                //do nothing basically
+                ChatLib.chat(`${constants.PREFIX}&bPb was not saved!`)
+                resetTest()
+            }
+            
     }
 }).setFps(1)
 
 export function resetTest(){
+    countdown = settings.testCountdown
+    constants.pbs.setnewpb = ""
     collectionTotal = 0;
+    collectionPerHour = 0;
     constants.data.skymallDuringTest = []
     constants.data.testTitlePlay = false
     constants.data.miningtestgui.timer = 0
     lastcheck = false
-    testover = true
+    constants.data.miningtestgui.istestactive = false
+    waitforresponse = false
+    constants.data.lobbyswaps = 0
+    constants.pbs.save()
     constants.data.save()
 }
 
 export function trackCollection(collection)
-{
+{//stolen from collectiongui 
     let collections = JSON.parse(FileLib.read("Coleweight", "data/collections.json"))
     if(collection == undefined) return ChatLib.chat(`${constants.PREFIX}&eThat is not a valid collection! (or is not supported)`)
     if(collection == "obby") collection = "obsidian"
@@ -76,41 +146,51 @@ export function trackCollection(collection)
     if(collections[collection.toLowerCase()] == undefined) return ChatLib.chat(`${constants.PREFIX}&eThat is not a valid collection! (or is not supported)`)
     constants.data.tracked.collectionEnchanted = collections[collection].collectionEnchanted
     constants.data.tracked.collectionName = collections[collection].collectionName
+    constants.data.tracked.amountToCompact = collections[collection].amountToCompact
     constants.data.miningtestgui.collectionName = collections[collection].collectionName
     activepb = constants.pbs[collection]
     collection = collection
     collectionTotal = 0
     constants.data.save()
-    
     ChatLib.chat(`${constants.PREFIX}&bSet collection to ${constants.data.tracked.collectionName}!`)
 }
 
+
+//mostly stole from https://github.com/PerseusPotter/chicktils/blob/master/modules/sacks.js will dm for permission once im finished devving
 register('chat', (time, evn) => {
+    //idk what this time thing is for but breaks without it so we leave be
     time = parseInt(time);
-    if (constants.data.miningtestgui.timer > 0 || lastcheck){
-        
-    
+    //if there is a test going on or if we are doing the last check
+    if (constants.data.tracked.collectionName != "XP" && constants.data.miningtestgui.timer > 0 || lastcheck ){
+    //get text from hover message
     const itemLog = evn.message.func_150253_a()[0].func_150256_b().func_150210_i().func_150702_b().func_150253_a();
     const items = new Map();
     // -1 = 'This message can be disabled in the settings.'
     for (let i = 0; i < itemLog.length - 1; i += 4) {
       // '  +23 '
       let amnt = itemLog[i].func_150261_e()
+      //remove the + and comma then make it a integer
       amnt = Number(amnt.replace(/[,+]/g,''))
 
       // 'Blaze Rod'
       let name = itemLog[i+1].func_150261_e();
+      // add to Map
       items.set(name,amnt); 
     }
+    //get the amount of enchanted version of collection
     enchantedColl = items.get(constants.data.tracked.collectionEnchanted)
+    //get the amount of unenchanted version of collection
     coll = items.get(constants.data.tracked.collectionName)
+    //if there is enchanted collection multiply by multiple for collection
     if (enchantedColl != undefined){
-        collectionTotal += enchantedColl * 160
+        collectionTotal += enchantedColl * constants.data.tracked.amountToCompact //this is cause fuck hardstone (could also be usefull if other collections are added)
     }
     if (coll != undefined){
         collectionTotal += coll
     }
+    //if this isnt a try statement it dosent like me
     try {
+        //get the removed items from the hover message same other than subtracting the collection from it so that compacting dosent make ur coll/h shoot up
         const removeditemlog = evn.message.func_150253_a()[3].func_150256_b().func_150210_i().func_150702_b().func_150253_a();
         const removeditems = new Map();
         for (let i = 0; i < removeditemlog.length - 1; i += 4) {
@@ -125,13 +205,14 @@ register('chat', (time, evn) => {
         removedcoll = removeditems.get(constants.data.tracked.collectionName)
         if(removedcoll != undefined){collectionTotal += removedcoll} 
     } catch (error){}
+    //calc new cph every time that the sack message is sent basically
     collectionPerHour = Math.floor(collectionTotal * (3600 / (constants.data.miningtestgui.maxtimer - constants.data.miningtestgui.timer)))
     lastcheck = false
 }
 }).setCriteria(/^&6\[Sacks\] &r&a\+[\d,]+&r&e items?&r&e(?:, &r&c-[\d,]+&r&e items?&r&e)?\.&r&8 \(Last (\d+)s\.\)&r$/);
 
 
-
+//this is just fancy display message cause i think it will look cool to flex
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -156,7 +237,7 @@ function finalMessage(collectionfromtest,testLength,newpb,collection,skymallsdur
     lineend = '&3==============================================='
     
     if (newpb){
-        message = `\n${line1}\n\n${line3}\n\n${pb1}\n${pb2}\n${pb3}\n\n${pb4}\n${line4}${line6}${line7}\n\n${lineend}\n`
+        message = `\n${line1}\n\n${line3}\n${pb1}\n${pb2}\n${pb3}\n${pb4}\n\n${line4}${line6}${line7}\n\n${lineend}\n`
     }else{
         message = `\n${line1}\n\n${line3}\n\n${line5}${line6}${line7}\n\n${lineend}\n`
     }
@@ -165,13 +246,7 @@ function finalMessage(collectionfromtest,testLength,newpb,collection,skymallsdur
 
 
 /*TODO:
-get collection wanted to be checked :check:
-sack tracker :check:
-collection menu tracker
 skill menu tracker 
 actionbar tracker
-finished test chat message 
-pb's
-lobby swap tracker
 pre test checklist
 */ 
