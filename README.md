@@ -9,6 +9,7 @@
 - [ ] Tracks if equipped drill has blue cheese (for pickobulus) [^2]
 - - -
 ## Mining Test / Collection Tracker
+command is /cw test
 - [x] Tracks collection gained based on sack messages
 - [x] Tracks mining XP gained based on action bar
 - [x] Tracks Pb's
