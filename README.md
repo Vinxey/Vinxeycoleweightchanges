@@ -20,7 +20,7 @@
 
 [^1]:currently toggleable in settings
 [^2]:currently just assumes you dont
-[^3]:currently hardcoded 30m only
+[^3]:currently hardcoded 30 mins only for simplicity
 [^4]:list of things to do before starting test would be customizable ex:
     - [ ] fuel drill 
     - [ ] fillet o fish 
