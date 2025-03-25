@@ -10,8 +10,9 @@ skymallDuringTest = [];
 lastcheck = false
 testover = true
 waitforresponse = false
+
+
 countdown = parseInt(settings.testCountdown)
-print(countdown)
 //delete after deving
 constants.data.miningtestgui.istestactive = false
 constants.data.save()
@@ -23,11 +24,11 @@ const miningtestgui = new BaseGui(["miningtestgui"], () =>
 
     let timerHr = Math.floor(constants.data.miningtestgui.timer/60/60)
 
-    if(timerHr >= 1)
-            timer = `&aTimer: &b${timerHr}h ${Math.floor(constants.data.miningtestgui.timer/60) - timerHr*60}m`
-    else
-            timer = `&aTimer: &b${Math.floor(constants.data.miningtestgui.timer/60)}m ${Math.floor(constants.data.miningtestgui.timer%60)}s`
-    message = `&a${constants.data.miningtestgui.collectionName}/h: &b${numberWithCommas(collectionPerHour)} \n&a${constants.data.miningtestgui.collectionName} Gained: &b${numberWithCommas(collectionTotal)} \n${timer}`
+        if(timerHr >= 1)
+                timer = `&aTimer: &b${timerHr}h ${Math.floor(constants.data.miningtestgui.timer/60) - timerHr*60}m`
+        else
+                timer = `&aTimer: &b${Math.floor(constants.data.miningtestgui.timer/60)}m ${Math.floor(constants.data.miningtestgui.timer%60)}s`
+        message = `&a${constants.data.miningtestgui.collectionName}/h: &b${numberWithCommas(collectionPerHour)} \n&a${constants.data.miningtestgui.collectionName} Gained: &b${numberWithCommas(collectionTotal)} \n${timer}`
 
     return message
 }, () => {return miningtestgui.isOpen() || settings.miningtestgui})
@@ -41,13 +42,28 @@ register("actionbar", (xp) => {
     if (match && xp.includes("Mining")) {
         totalxp = match[1].replace(/,|\/0/g,"")
         constants.data.miningXP  = totalxp
+        if (settings.collectionTracker && constants.data.miningtestgui.collectionName == "XP" && !timerStart){
+                constants.data.miningtestgui.timer = 1
+                startingxp = constants.data.miningXP
+                timerStart = true
+                print('a')
+        }
     }
+
+    
 }).setCriteria("${xp}")
 
 register("step", () => {
-    
+    if (settings.collectionTracker && timerStart){
+        constants.data.miningtestgui.timer += 1
+        constants.data.save()
+        if (constants.data.miningtestgui.collectionName == "XP"){
+            collectionTotal = constants.data.miningXP - startingxp
+            collectionPerHour = Math.floor(collectionTotal / ((constants.data.miningtestgui.timer) / (3600)))
+        }
+    }
 
-    if (countdown >= 0 && constants.data.miningtestgui.timer > 0){
+    if (countdown >= 0 && constants.data.miningtestgui.timer > 0 && !settings.collectionTracker){
         //print('meow')
         if (countdown >0){
             countdownTitle.text = `&b${countdown}`  
@@ -61,12 +77,12 @@ register("step", () => {
         }
     }
     //timer decrement and manage skymall array
-    else if(constants.data.miningtestgui.timer > 0){
+    else if(constants.data.miningtestgui.timer > 0 && !settings.collectionTracker){
         constants.data.miningtestgui.timer -= 1
         if (!skymallDuringTest.includes(constants.data.currentSkymall) ){skymallDuringTest.push(constants.data.currentSkymall)}
         if (constants.data.miningtestgui.collectionName == "XP"){
             collectionTotal = constants.data.miningXP - startingxp
-            collectionPerHour = Math.floor(collectionTotal * (3600 / (constants.data.miningtestgui.maxtimer - constants.data.miningtestgui.timer)))
+            collectionPerHour = Math.floor(collectionTotal / (3600 / constants.data.miningtestgui.timer))
         }
     }
     //when the test ends show title\
@@ -135,7 +151,10 @@ export function resetTest(){
     constants.data.lobbyswaps = 0
     constants.pbs.save()
     constants.data.save()
+    timerStart = false
 }
+resetTest()
+
 
 export function trackCollection(collection)
 {//stolen from collectiongui 
@@ -156,12 +175,13 @@ export function trackCollection(collection)
 }
 
 
-//mostly stole from https://github.com/PerseusPotter/chicktils/blob/master/modules/sacks.js will dm for permission once im finished devving
+//mostly stolen from chick_is_bored original code here --> https://github.com/PerseusPotter/chicktils/blob/master/modules/sacks.js 
 register('chat', (time, evn) => {
     //idk what this time thing is for but breaks without it so we leave be
     time = parseInt(time);
+    print(time)
     //if there is a test going on or if we are doing the last check
-    if (constants.data.tracked.collectionName != "XP" && constants.data.miningtestgui.timer > 0 || lastcheck ){
+    if (constants.data.tracked.collectionName != "XP" && constants.data.miningtestgui.timer > 0 || lastcheck || settings.collectionTracker){
     //get text from hover message
     const itemLog = evn.message.func_150253_a()[0].func_150256_b().func_150210_i().func_150702_b().func_150253_a();
     const items = new Map();
@@ -170,7 +190,7 @@ register('chat', (time, evn) => {
       // '  +23 '
       let amnt = itemLog[i].func_150261_e()
       //remove the + and comma then make it a integer
-      amnt = Number(amnt.replace(/[,+]/g,''))
+      amnt = parseInt(amnt.replace(/[,+]/g,''))
 
       // 'Blaze Rod'
       let name = itemLog[i+1].func_150261_e();
@@ -196,7 +216,7 @@ register('chat', (time, evn) => {
         for (let i = 0; i < removeditemlog.length - 1; i += 4) {
             // '  +23 '
             let amnt = removeditemlog[i].func_150261_e()
-            amnt = Number(amnt.replace(',',''))
+            amnt = parseInt(amnt.replace(',',''))
       
             // 'Blaze Rod'
             let name = removeditemlog[i+1].func_150261_e();
@@ -206,7 +226,24 @@ register('chat', (time, evn) => {
         if(removedcoll != undefined){collectionTotal += removedcoll} 
     } catch (error){}
     //calc new cph every time that the sack message is sent basically
+    if (!settings.collectionTracker && constants.data.tracked.collectionName != "XP"){ print('a')
     collectionPerHour = Math.floor(collectionTotal * (3600 / (constants.data.miningtestgui.maxtimer - constants.data.miningtestgui.timer)))
+    }
+
+    //Collection tracker for non tests
+    if (settings.collectionTracker && constants.data.tracked.collectionName != "XP"){
+         if (!timerStart){
+            startTime = Date.now()
+            constants.data.miningtestgui.timer = time
+            constants.data.save()
+            timerStart = true
+            collectionPerHour = Math.floor(collectionTotal / ((time) / (3600)))
+        }else{   
+        collectionPerHour = Math.floor(collectionTotal / ((Date.now() - startTime) / (1000 * 60 * 60)))
+        
+        print('c')
+    }
+}
     lastcheck = false
 }
 }).setCriteria(/^&6\[Sacks\] &r&a\+[\d,]+&r&e items?&r&e(?:, &r&c-[\d,]+&r&e items?&r&e)?\.&r&8 \(Last (\d+)s\.\)&r$/);
@@ -246,7 +283,5 @@ function finalMessage(collectionfromtest,testLength,newpb,collection,skymallsdur
 
 
 /*TODO:
-skill menu tracker 
-actionbar tracker
 pre test checklist
 */ 

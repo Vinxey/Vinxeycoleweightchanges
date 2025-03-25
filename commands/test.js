@@ -15,6 +15,7 @@ export default registerCommand({
             return ChatLib.chat(`${constants.PREFIX}&bOptions are: &3start&b, &3reset&b, &3set&b, &3resetpbs&b.`)
         if (args[1].toLowerCase() == "set"){
             trackCollection(args[2])
+            resetTest()
         }
         else if(constants.data.tracked.collectionName == undefined){
             ChatLib.chat(`${constants.PREFIX}&bNo collection selected please run "/cw test set" first`)
@@ -28,7 +29,7 @@ export default registerCommand({
             ChatLib.chat(`${constants.PREFIX}&bSet timer to ${Math.floor(timer/60)}m ${Math.ceil(timer%60)}s`)
         }
         else if (args[1].toLowerCase() == "reset"){
-        resetTest()
+            resetTest()
         ChatLib.chat(`${constants.PREFIX}&bTest has been reset!`)
     }
         else if(args[1].toLowerCase() == "resetpbs"){

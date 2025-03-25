@@ -306,7 +306,7 @@ class Settings {
     })
     cwPassPlayer = "";
     // SUBCAT Collection
-    @SwitchProperty({
+    /*@SwitchProperty({
         name: "Collection tracker",
         description: "&4Deprecated &7Tracks collections ('/cw track (collection)' to set).",
         subcategory: "Collection",
@@ -340,7 +340,7 @@ class Settings {
     moveCollectionLocation() {
         ChatLib.command("cw move collection", true);
     }
-
+    */
     // SUBCAT Metal Detector Solver
     @SwitchProperty({
         name: "Metal Detector Solver",
@@ -400,6 +400,14 @@ class Settings {
         category: "Gui"
     })
     testCountdown = "5";
+
+    @SwitchProperty({
+        name: "Collection Tracker",
+        description: "if enabled removes test functionality and makes timer tick up instead of down",
+        subcategory: "MiningTest",
+        category: "Gui"
+    })
+    collectionTracker = false
 
     @ButtonProperty({
         name: "Change MiningTest gui position",
