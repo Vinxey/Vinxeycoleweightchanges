@@ -13,7 +13,7 @@ command is /cw test
 - [x] Tracks collection gained based on sack messages
 - [x] Tracks mining XP gained based on action bar
 - [x] Tracks Pb's
-- [ ] Make test length variable [^3]
+- [x] Make test length variable
 - [x] Track collection / xp over undefined time limit
 - [ ] Pre test checklist [^4]
 - [ ] Track profit/h with bazaar data [^5]
@@ -21,7 +21,6 @@ command is /cw test
 
 [^1]:currently toggleable in settings
 [^2]:currently just assumes you dont
-[^3]:currently hardcoded 30 mins only for simplicity
 [^4]:list of things to do before starting test would be customizable ex:
     - [ ] fuel drill 
     - [ ] fillet o fish 
