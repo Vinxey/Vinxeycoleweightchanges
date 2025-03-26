@@ -63,7 +63,7 @@ register("step", () => {
         }
     }
 
-    if (countdown >= 0 && constants.data.miningtestgui.timer > 0 && !settings.collectionTracker){
+    if (parseInt(settings.testCountdown) > 0 && constants.data.miningtestgui.timer > 0 && !settings.collectionTracker && countdown != -1){
         //print('meow')
         if (countdown >0){
             countdownTitle.text = `&b${countdown}`  
@@ -115,6 +115,7 @@ register("step", () => {
             waitforresponse = true
         }
         else{
+            time =  `&b${Math.floor(constants.data.miningtestgui.maxtimer/60)}m ${Math.floor(constants.data.miningtestgui.maxtimer%60)}s`
             newpb=false
             finalMessage(collectionPerHour,time,newpb,constants.data.miningtestgui.collectionName,skymallDuringTest)
             resetTest()
@@ -276,7 +277,7 @@ function finalMessage(collectionfromtest,testLength,newpb,collection,skymallsdur
     if (newpb){
         message = `\n${line1}\n\n${line3}\n${pb1}\n${pb2}\n${pb3}\n${pb4}\n\n${line4}${line6}${line7}\n\n${lineend}\n`
     }else{
-        message = `\n${line1}\n\n${line3}\n\n${line5}${line6}${line7}\n\n${lineend}\n`
+        message = `\n${line1}\n\n${line3}\n\n${line4}\n\n${line5}${line6}${line7}\n\n${lineend}\n`
     }
     ChatLib.chat(message)
 }
