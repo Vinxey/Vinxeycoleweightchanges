@@ -14,7 +14,7 @@ command is /cw test
 - [x] Tracks mining XP gained based on action bar
 - [x] Tracks Pb's
 - [ ] Make test length variable [^3]
-- [ ] Track collection / xp over undefined time limit
+- [x] Track collection / xp over undefined time limit
 - [ ] Pre test checklist [^4]
 - [ ] Track profit/h with bazaar data [^5]
 - [ ] Dont update pb's during fiesta [^6]
