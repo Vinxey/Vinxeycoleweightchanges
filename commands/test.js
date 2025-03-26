@@ -21,8 +21,16 @@ export default registerCommand({
             ChatLib.chat(`${constants.PREFIX}&bNo collection selected please run "/cw test set" first`)
         }
         else if(args[1].toLowerCase() == "start")
-        {
-            timer = 10
+        {   
+            if(args[2] == undefined)
+                timer = 1800
+            else if(args[2].includes("h"))
+                timer = parseInt(args[2])*60*60 ?? 0
+            else if(args[2].includes("m"))
+                timer = parseInt(args[2])*60 ?? 0
+            else
+                timer = parseInt(args[2]) ?? 0
+            
             constants.data.testTitlePlay = true
             constants.data.miningtestgui.istestactive = true
             constants.data.save()
