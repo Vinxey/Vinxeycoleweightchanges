@@ -8,14 +8,7 @@ import constants from "../../util/constants"
 activeAbilities = undefined
 addAbility(constants.data.currentAbility, 0)
 
-const skymallGui = new BaseGui(["skymallGui"], () =>
-{
-    message = `&bCurrent Skymall:\n&a${constants.data.currentSkymall}`
 
-    return message
-}, () => {return skymallGui.isOpen() || settings.skymallGui})
-
-registerGui(skymallGui)
 const miningAbilitiesGui = new BaseGui(["abilityGui", "miningabilities"], () => {
     if(!checkAreas() || constants.data.currentAbility == "") // had to add currentAbility check otherwise on first time timer would just say 0 forever and give errors etc
            
@@ -62,34 +55,7 @@ register("step", () => {
  
 
 //gets skymall and saves it to data could be used for other things also but mainly just doing for 20% cooldown reduction thing
-register("chat", (Skymall) => {
-    switch (Skymall){
-        case "-20% Pickaxe Ability cooldowns":
-        constants.data.currentSkymall = Skymall
-        constants.data.save()
-        break
-        case "Gain +100⸕ Mining Speed":
-        constants.data.currentSkymall = Skymall
-        constants.data.save()
-        break
-        case "Gain +50☘ Mining Fortune":
-        constants.data.currentSkymall = Skymall
-        constants.data.save()
-        break
-        case "Gain +15% more Powder while mining":
-        constants.data.currentSkymall = Skymall
-        constants.data.save()
-        break
-        case "Gain 5x Titanium drops":
-        constants.data.currentSkymall = Skymall
-        constants.data.save()
-        break
-        case "10x chance to find Golden and Diamond Goblins":
-        constants.data.currentSkymall = Skymall
-        constants.data.save()
-        break
-    }
-}).setCriteria(/New buff: (.*?)\.$/g)
+
 
 //gets ability through you used your {ability name} message
 register("chat", (abilityName) =>{
